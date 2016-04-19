@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:24:02 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/10 16:23:17 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/19 15:41:10 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	ft_all_obj(t_env *e)
 	{
 		if (e->begin->name == 's')
 			ft_sphere(e);
+		if (e->begin->name == 'c')
+			ft_cone(e);
+		if (e->begin->name == 'y')
+			ft_cylindre(e);
 		if (e->begin->name == 'p')
 			ft_plan(e);
 		if ((e->m_t == 0 || e->t < e->m_t) && e->t >= 1)
@@ -55,9 +59,9 @@ void	ft_put_col(t_env *e)
 
 	if (e->m_t >= 1)
 	{
-		red = 255.0 - ((e->m_t * 100 - 100) * 4);
+		red = 255.0 - ((e->m_t * 100 - 100) * 4.2);
 		blue = 255.0 - ((e->m_t * 100 - 100) * 0.5);
-		if (e->m_name == 's')
+		if (e->m_name == 's' || e->m_name == 'c' || e->m_name == 'y')
 			ft_put_pixel(e, e->x, e->y, (red << 16) + (0 << 8) + 0);
 		if (e->m_name == 'p')
 			ft_put_pixel(e, e->x, e->y, (0 << 16) + (0 << 8) + blue);

@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:20:01 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/18 15:44:23 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/19 15:47:04 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void				ft_all_obj(t_env *e);
 void				ft_put_col(t_env *e);
 
 void				ft_sphere(t_env *e);
+void				ft_cone(t_env *e);
+void				ft_cylindre(t_env *e);
 void				ft_plan(t_env *e);
 
 void				ft_put_pixel(t_env *e, int x, int y, int color);
