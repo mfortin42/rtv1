@@ -6,12 +6,13 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:17:46 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/19 15:36:44 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/26 15:18:29 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rtv1.h"
 
+/*
 void	ft_sphere(t_env *e)
 {
 	double	a;
@@ -76,7 +77,7 @@ void	ft_cylindre(t_env *e)
 	double	c;
 
 	a = pow(e->cam.r_dir_x + e->x, 2)
-		+ pow(e->cam.r_dir_z, 2);
+		+ pow(e->cam.r_dir_z, 2) - e->x;
 	b = 2 * (e->cam.r_dir_x + e->x) * (e->cam.pos_x - e->begin->pos_x)
 		+ 2 * e->cam.r_dir_z * (e->cam.pos_z - e->begin->pos_z);
 	c = (pow(e->cam.pos_x - e->begin->pos_x, 2)
@@ -88,3 +89,4 @@ void	ft_cylindre(t_env *e)
 				(-b + sqrt(e->dis)) / (2 * a) : (-b - sqrt(e->dis)) / (2 * a));
 	}
 }
+*/
