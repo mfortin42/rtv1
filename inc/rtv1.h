@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:20:01 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/26 15:01:56 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 12:41:14 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ typedef struct		s_env
 	t_obj			*obj;
 	t_obj			*bg;
 
+	double			agl;
+	double			cdx;
+	double			cdy;
+	double			cdz;
 	double			**mx;
-	double			angle;
 
 	double			t;
 	double			m_t;
@@ -72,7 +75,7 @@ typedef struct		s_env
 	double			dis;
 }					t_env;
 
-void				ft_ini_ray(t_ray *r);
+void				ft_ini_ray(t_env *e, t_ray *r);
 void				ft_ini_objs(t_env *e);
 
 void				ft_algo(t_env *e, t_ray *r);
@@ -86,10 +89,10 @@ void				ft_sum_matrix(t_env *e, double **mx_a, double **mx_b, double **mx_c);
 void				ft_norm(t_ray *r);
 void				ft_rot_vect(t_env *e, t_ray *r);
 
-void				ft_all_obj(t_env *e);
+void				ft_all_obj(t_env *e, t_ray *r);
 void				ft_put_col(t_env *e, int x, int y);
 
-void				ft_sphere(t_env *e);
+void				ft_sphere(t_env *e, t_ray *r);
 void				ft_cone(t_env *e);
 void				ft_cylindre(t_env *e);
 void				ft_plan(t_env *e);

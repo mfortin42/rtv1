@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:22:57 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/26 14:21:09 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 12:43:50 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		main(void)
 	t_env	e;
 	t_ray	r;
 
-	ft_ini_ray(&r);
+	ft_ini_ray(&e, &r);
 	ft_ini_objs(&e);
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, WIN_X, WIN_Y, "rtv1");

@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:24:02 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/26 15:13:36 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 13:49:00 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,30 @@ void	ft_algo(t_env *e, t_ray *r)
 		{
 			r->dx = -WIN_X / 2 + x;
 			r->dy = WIN_Y / 2 - y;
-			ft_norm(r);
+			r->dz = 3780;
+//			ft_norm(r);
 			ft_rot_vect(e, r);
 			e->t = 0;
 			e->m_t = 0;
 			e->bg = e->obj;
-			ft_all_obj(e);
+			ft_all_obj(e, r);
 			ft_put_col(e, x, y);
 		}
 	}
 }
 
-void	ft_all_obj(t_env *e)
+void	ft_all_obj(t_env *e, t_ray *r)
 {
 	while (e->bg)
 	{
 		if (e->bg->n == 's')
-			ft_sphere(e);
-		if (e->bg->n == 'c')
+			ft_sphere(e, r);
+/*		if (e->bg->n == 'c')
 			ft_cone(e);
 		if (e->bg->n == 'y')
 			ft_cylindre(e);
 		if (e->bg->n == 'p')
-			ft_plan(e);
+			ft_plan(e);*/
 		if ((e->m_t == 0 || e->t < e->m_t) && e->t >= 1)
 		{
 			e->m_t = e->t;

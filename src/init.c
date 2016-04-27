@@ -6,13 +6,13 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:16:08 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/26 15:15:58 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 13:51:35 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rtv1.h"
 
-void	ft_ini_ray(t_ray *r)
+void	ft_ini_ray(t_env *e, t_ray *r)
 {
 	r->ox = WIN_X / 2;
 	r->oy = WIN_Y / 2;
@@ -20,22 +20,27 @@ void	ft_ini_ray(t_ray *r)
 	r->dx = -WIN_X / 2;
 	r->dy = WIN_Y / 2;
 	r->dz = 3780;
+
+	e->agl = 0;
+	e->cdx = 0;
+	e->cdy = 0;
+	e->cdz = 0;
 }
 
 void	ft_ini_objs(t_env *e)
 {
 	e->obj = malloc(sizeof(t_obj));
 
-	e->obj->n = 'y';
+	e->obj->n = 's';
 	e->obj->ox = 1000;
-	e->obj->oy = 0;
+	e->obj->oy = 540;
 	e->obj->oz = 1890;
 	e->obj->dx = 0;
 	e->obj->dy = 0;
 	e->obj->dz = 0;
-	e->obj->sz = 200;
+	e->obj->sz = 540;
 	e->obj->next = NULL;
-
+/*
 	t_obj	*tmp;
 	tmp = malloc(sizeof(t_obj));
 	e->obj->next = tmp;
@@ -87,4 +92,5 @@ void	ft_ini_objs(t_env *e)
 	tmp4->dz = 0;
 	tmp4->sz = 0;
 	tmp4->next = NULL;
+*/
 }

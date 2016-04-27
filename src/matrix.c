@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 14:46:07 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/26 15:12:32 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 12:48:20 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void	ft_matrix(t_env *e, t_ray *r)
 {
+	r->dx = r->dx;
 	double **mx_a;
 	double **mx_b;
 	double **mx_c;
 
-	mx_a = ft_matrix_a(1 - cos(e->angle), r->dx, r->dy, r->dz);
-	mx_b = ft_matrix_b(cos(e->angle));
-	mx_c = ft_matrix_c(sin(e->angle), r->dx, r->dy, r->dz);
+	mx_a = ft_matrix_a(1 - cos(e->agl), e->cdx, e->cdy, e->cdz);
+	mx_b = ft_matrix_b(cos(e->agl));
+	mx_c = ft_matrix_c(sin(e->agl), e->cdx, e->cdy, e->cdz);
 	ft_sum_matrix(e, mx_a, mx_b, mx_c);
 }
 
@@ -84,7 +85,7 @@ double	**ft_matrix_c(double a, double x, double y, double z)
 	matrix[1][1] = 0;
 	matrix[1][2] = -x * a;
 	matrix[2][0] = -y * a;
-	matrix[2][1] = z * a;
+	matrix[2][1] = x * a;
 	matrix[2][2] = 0;
 	return (matrix);
 }
