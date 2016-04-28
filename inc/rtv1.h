@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:20:01 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/27 12:41:14 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/28 15:26:21 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,16 @@ double				**ft_matrix_b(double a);
 double				**ft_matrix_c(double a, double x, double y, double z);
 void				ft_sum_matrix(t_env *e, double **mx_a, double **mx_b, double **mx_c);
 
-void				ft_norm(t_ray *r);
+void				ft_norm(double *x, double *y, double *z);
 void				ft_rot_vect(t_env *e, t_ray *r);
 
 void				ft_all_obj(t_env *e, t_ray *r);
 void				ft_put_col(t_env *e, int x, int y);
 
 void				ft_sphere(t_env *e, t_ray *r);
-void				ft_cone(t_env *e);
-void				ft_cylindre(t_env *e);
-void				ft_plan(t_env *e);
+void				ft_cone(t_env *e, t_ray *r);
+void				ft_cylindre(t_env *e, t_ray *r);
+void				ft_plan(t_env *e, t_ray *r);
 
 void				ft_put_pixel(t_env *e, int x, int y, int color);
 

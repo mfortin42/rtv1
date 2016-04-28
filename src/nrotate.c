@@ -6,20 +6,20 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 15:13:40 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/27 12:38:27 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/27 14:52:07 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rtv1.h"
 
-void	ft_norm(t_ray *r)
+void	ft_norm(double *x, double *y, double *z)
 {
 	double	n;
 
-	n = sqrt(pow(r->dx, 2) + pow(r->dy, 2) + pow(r->dz, 2));
-	r->dx /= n;
-	r->dy /= n;
-	r->dz /= n;
+	n = sqrt(pow(*x, 2) + pow(*y, 2) + pow(*z, 2));
+	*x /= n;
+	*y /= n;
+	*z /= n;
 }
 
 void	ft_rot_vect(t_env *e, t_ray *r)
