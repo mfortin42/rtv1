@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:20:01 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/28 15:26:21 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/29 16:10:05 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ typedef struct		s_obj
 	struct s_obj	*next;
 }					t_obj;
 
+typedef struct		s_lig
+{
+	t_ray			lum;
+	double			r;
+	double			g;
+	double			b;
+	struct	s_lig	*next;
+}					t_lig;
+
 typedef struct		s_env
 {
 	void			*mlx;
@@ -60,8 +69,11 @@ typedef struct		s_env
 	int				imlen;
 	int				endi;
 
+	t_ray			*cam;
 	t_obj			*obj;
 	t_obj			*bg;
+	t_obj			*m_obj;
+	t_lig			*lig;
 
 	double			agl;
 	double			cdx;
@@ -73,12 +85,14 @@ typedef struct		s_env
 	double			m_t;
 	char			m_name;
 	double			dis;
+
+	double			test;
 }					t_env;
 
-void				ft_ini_ray(t_env *e, t_ray *r);
+void				ft_ini_ray(t_env *e);
 void				ft_ini_objs(t_env *e);
 
-void				ft_algo(t_env *e, t_ray *r);
+void				ft_algo(t_env *e);
 
 void				ft_matrix(t_env *e, t_ray *r);
 double				**ft_matrix_a(double a, double x, double y, double z);

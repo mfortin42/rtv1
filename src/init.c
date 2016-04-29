@@ -6,25 +6,31 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:16:08 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/28 16:33:22 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/04/29 15:56:32 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rtv1.h"
 
-void	ft_ini_ray(t_env *e, t_ray *r)
+void	ft_ini_ray(t_env *e)
 {
-	r->ox = WIN_X / 2;
-	r->oy = WIN_Y / 2;
-	r->oz = -3780;
-	r->dx = -WIN_X / 2;
-	r->dy = WIN_Y / 2;
-	r->dz = 3780;
+	e->cam = malloc(sizeof(t_ray));
+	e->cam->ox = WIN_X / 2;
+	e->cam->oy = WIN_Y / 2;
+	e->cam->oz = -3780;
+	e->cam->dx = -WIN_X / 2;
+	e->cam->dy = WIN_Y / 2;
+	e->cam->dz = 3780;
 
 	e->agl = 0;
 	e->cdx = 0;
 	e->cdy = 0;
 	e->cdz = 0;
+
+	e->lig = malloc(sizeof(t_lig));
+	e->lig->lum.ox = WIN_X / 3;
+	e->lig->lum.oy = 740;
+	e->lig->lum.oz = -3780;
 }
 
 void	ft_ini_objs(t_env *e)
@@ -60,9 +66,9 @@ void	ft_ini_objs(t_env *e)
 	tmp->next = tmp2;
 	tmp2->n = 'p';
 	tmp2->ox = 0;
-	tmp2->oy = 400;
+	tmp2->oy = 100;
 	tmp2->oz = 0;
-	tmp2->dx = 0.2;
+	tmp2->dx = 0;
 	tmp2->dy = 1;
 	tmp2->dz = 0;
 	ft_norm(&tmp2->dx, &tmp2->dy, &tmp2->dz);
@@ -97,4 +103,17 @@ void	ft_ini_objs(t_env *e)
 	tmp4->sz = 0.3;
 	tmp4->next = NULL;
 
+	t_obj	*tmp5;
+	tmp5 = malloc(sizeof(t_obj));
+	tmp4->next = tmp5;
+	tmp5->n = 'p';
+	tmp5->ox = 200;
+	tmp5->oy = 540;
+	tmp5->oz = 15000;
+	tmp5->dx = 0;
+	tmp5->dy = 0;
+	tmp5->dz = 1;
+	ft_norm(&tmp5->dx, &tmp5->dy, &tmp5->dz);
+	tmp5->sz = 0;
+	tmp5->next = NULL;
 }
