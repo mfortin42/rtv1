@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:16:08 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/29 15:56:32 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/05/02 15:22:42 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	ft_ini_ray(t_env *e)
 	e->lig->lum.ox = WIN_X / 3;
 	e->lig->lum.oy = 740;
 	e->lig->lum.oz = -3780;
+
+	e->cam_ligx = e->cam->ox - e->lig->lum.ox;
+	e->cam_ligy = e->cam->oy - e->lig->lum.oy;
+	e->cam_ligz = e->cam->oz - e->lig->lum.oz;
 }
 
 void	ft_ini_objs(t_env *e)
@@ -44,7 +48,11 @@ void	ft_ini_objs(t_env *e)
 	e->obj->dx = 0;
 	e->obj->dy = 0;
 	e->obj->dz = 0;
+	ft_norm(&e->obj->dx, &e->obj->dy, &e->obj->dz);
 	e->obj->sz = 540;
+	e->obj->szcos = cos(e->obj->sz) * cos(e->obj->sz);
+	e->obj->szsin = sin(e->obj->sz) * sin(e->obj->sz);
+
 	e->obj->next = NULL;
 
 	t_obj	*tmp;
@@ -59,6 +67,9 @@ void	ft_ini_objs(t_env *e)
 	tmp->dz = 0;
 	ft_norm(&tmp->dx, &tmp->dy, &tmp->dz);
 	tmp->sz = 200;
+	tmp->szcos = cos(tmp->sz) * cos(tmp->sz);
+	tmp->szsin = sin(tmp->sz) * sin(tmp->sz);
+
 	tmp->next = NULL;
 
 	t_obj	*tmp2;
@@ -73,8 +84,11 @@ void	ft_ini_objs(t_env *e)
 	tmp2->dz = 0;
 	ft_norm(&tmp2->dx, &tmp2->dy, &tmp2->dz);
 	tmp2->sz = 200;
-	tmp2->next = NULL;
+	tmp2->szcos = cos(tmp2->sz) * cos(tmp2->sz);
+	tmp2->szsin = sin(tmp2->sz) * sin(tmp2->sz);
 
+	tmp2->next = NULL;
+/*
 	t_obj	*tmp3;
 	tmp3 = malloc(sizeof(t_obj));
 	tmp2->next = tmp3;
@@ -88,10 +102,10 @@ void	ft_ini_objs(t_env *e)
 	ft_norm(&tmp3->dx, &tmp3->dy, &tmp3->dz);
 	tmp3->sz = 100;
 	tmp3->next = NULL;
-
+*/
 	t_obj	*tmp4;
 	tmp4 = malloc(sizeof(t_obj));
-	tmp3->next = tmp4;
+	tmp2->next = tmp4;
 	tmp4->n = 'c';
 	tmp4->ox = 200;
 	tmp4->oy = 540;
@@ -101,6 +115,9 @@ void	ft_ini_objs(t_env *e)
 	tmp4->dz = 0;
 	ft_norm(&tmp4->dx, &tmp4->dy, &tmp4->dz);
 	tmp4->sz = 0.3;
+	tmp4->szcos = cos(tmp4->sz) * cos(tmp4->sz);
+	tmp4->szsin = sin(tmp4->sz * tmp4->sz);
+
 	tmp4->next = NULL;
 
 	t_obj	*tmp5;
@@ -115,5 +132,8 @@ void	ft_ini_objs(t_env *e)
 	tmp5->dz = 1;
 	ft_norm(&tmp5->dx, &tmp5->dy, &tmp5->dz);
 	tmp5->sz = 0;
+	tmp5->szcos = cos(tmp5->sz) * cos(tmp5->sz);
+	tmp5->szsin = sin(tmp5->sz) * sin(tmp5->sz);
+
 	tmp5->next = NULL;
 }

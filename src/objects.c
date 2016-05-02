@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:17:46 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/29 16:37:42 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/05/02 15:28:12 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,92 +14,71 @@
 
 void	ft_sphere(t_env *e, t_ray *r)
 {
-	double	a;
-	double	b;
-	double	c;
-
-	a = pow(r->dx, 2)
-		+ pow(r->dy, 2)
-		+ pow(r->dz, 2);
-	b = 2 * (r->dx * (r->ox - e->bg->ox)
-		+ r->dy * (r->oy - e->bg->oy)
-		+ r->dz * (r->oz - e->bg->oz));
-	c = (pow((r->ox - e->bg->ox), 2)
-		+ pow((r->oy - e->bg->oy), 2)
-		+ pow((r->oz - e->bg->oz), 2)) - pow(e->bg->sz, 2);
-	e->dis = pow(b, 2) - 4 * a * c;
+	e->a = r->dx * r->dx + r->dy * r->dy + r->dz * r->dz;
+	e->b = 2 * (r->dx * e->ex + r->dy * e->ey + r->dz * e->ez);
+	e->c = (e->ex * e->ex + e->ey * e->ey + e->ez * e->ez)
+			- e->bg->sz * e->bg->sz;
+	e->dis = e->b * e->b - 4 * e->a * e->c;
 	if (e->dis > 0)
 	{
-		e->t = ((-b + sqrt(e->dis)) / (2 * a) <= (-b - sqrt(e->dis)) / (2 * a) ?
-				(-b + sqrt(e->dis)) / (2 * a) : (-b - sqrt(e->dis)) / (2 * a));
+		e->t = ((-e->b + sqrt(e->dis)) / (2 * e->a) <=
+				(-e->b - sqrt(e->dis)) / (2 * e->a) ?
+				(-e->b + sqrt(e->dis)) / (2 * e->a) :
+				(-e->b - sqrt(e->dis)) / (2 * e->a));
 	}
 }
 
 void	ft_cone(t_env *e, t_ray *r)
 {
-	double	a;
-	double	b;
-	double	c;
-
-	double ex = r->ox - e->bg->ox;
-	double ey = r->oy - e->bg->oy;
-	double ez = r->oz - e->bg->oz;
-
-	a = pow(cos(e->bg->sz), 2) * ((r->dx * r->dx + r->dy * r->dy + r->dz * r->dz)
-		- pow(r->dx * e->bg->dx + r->dy * e->bg->dy + r->dz * e->bg->dz, 2)) -
-		pow(sin(e->bg->sz), 2) * pow(e->bg->dx * r->dx + e->bg->dy * r->dy + e->bg->dz * r->dz, 2);
-	b = 2 * (pow(cos(e->bg->sz), 2) * ((r->dx * ex + r->dy * ey + r->dz * ez)
-		- (e->bg->dx * ex + e->bg->dy * ey + e->bg->dz * ez) * (e->bg->dx * r->dx +
-		e->bg->dy * r->dy + e->bg->dz * r->dz))) - 2 * (pow(sin(e->bg->sz), 2) *
-		(r->dx * e->bg->dx + r->dy * e->bg->dy + r->dz * e->bg->dz) * (ex * e->bg->dx
-		+ ey * e->bg->dy + ez * e->bg->dz));
-	c = pow(cos(e->bg->sz), 2) * (ex * ex + ey * ey + ez * ez - pow(ex * e->bg->dx
-		+ ey * e->bg->dy + ez * e->bg->dz, 2)) - pow(sin(e->bg->sz), 2) *
-		pow(ex * e->bg->dx + ey * e->bg->dy + ez * e->bg->dz, 2);
-	e->dis = pow(b, 2) - 4 * a * c;
+	e->a = e->bg->szcos * ((r->dx * r->dx + r->dy * r->dy + r->dz * r->dz)
+		- e->ea * e->ea) - e->bg->szsin * e->ea * e->ea;
+	e->b = 2 * (e->bg->szcos * ((r->dx * e->ex + r->dy * e->ey + r->dz * e->ez)
+		- (e->bg->dx * e->ex + e->bg->dy * e->ey + e->bg->dz * e->ez) * e->ea))
+		- 2 * (e->bg->szsin * e->ea
+		* (e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz));
+	e->c = e->bg->szcos * (e->ex * e->ex + e->ey * e->ey + e->ez * e->ez
+		- (e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz)
+		* (e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz))
+		- e->bg->szsin
+		* ((e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz)
+		* (e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz));
+	e->dis = e->b * e->b - 4 * e->a * e->c;
 	if (e->dis > 0)
 	{
-		e->t = ((-b + sqrt(e->dis)) / (2 * a) <= (-b - sqrt(e->dis)) / (2 * a) ?
-				(-b + sqrt(e->dis)) / (2 * a) : (-b - sqrt(e->dis)) / (2 * a));
+		e->t = ((-e->b + sqrt(e->dis)) / (2 * e->a) <=
+				(-e->b - sqrt(e->dis)) / (2 * e->a) ?
+				(-e->b + sqrt(e->dis)) / (2 * e->a) :
+				(-e->b - sqrt(e->dis)) / (2 * e->a));
 	}
 }
 
-void	ft_plan(t_env *e, t_ray *r)
+void	ft_plan(t_env *e)
 {
-	double a;
-	double b;
-	double c;
-
-	a = -((e->bg->dx * e->bg->ox) + (e->bg->dy * e->bg->oy) + (e->bg->dz * e->bg->oz));
-	b = (e->bg->dx * r->dx) + (e->bg->dy * r->dy) + (e->bg->dz * r->dz);
-	c = -(e->bg->dx * (r->ox - e->bg->ox) + e->bg->dy * (r->oy - e->bg->oy) +
-			e->bg->dz * (r->oz - e->bg->oz)) / b;
-	if (b != 0)
-		e->t = c;
+	e->a = -(e->bg->dx * e->bg->ox + e->bg->dy
+		* e->bg->oy + e->bg->dz * e->bg->oz);
+	e->c = -(e->bg->dx * e->ex + e->bg->dy * e->ey + e->bg->dz * e->ez) / e->ea;
+	if (e->ea != 0)
+		e->t = e->c;
 }
 
 void	ft_cylindre(t_env *e, t_ray *r)
 {
-	double	a;
-	double	b;
-	double	c;
-
-	double ex = r->ox - e->bg->ox;
-	double ey = r->oy - e->bg->oy;
-	double ez = r->oz - e->bg->oz;
-
-	a = (r->dx * r->dx + r->dy * r->dy + r->dz * r->dz) - pow((r->dx * e->bg->dx)
-		+ (r->dy * e->bg->dy) + (r->dz * e->bg->dz), 2);
-	b = 2 * ((r->dx * ex + r->dy * ey + r->dz * ez) - (e->bg->dx * ex +
-		e->bg->dy * ey + e->bg->dz * ez) * (e->bg->dx * r->dx + e->bg->dy
-		* r->dy + e->bg->dz * r->dz));
-	c = (pow(ex, 2) + pow(ey, 2) + pow(ez, 2)) - pow(ex * e->bg->dx + ey *
-		e->bg->dy + ez * e->bg->dz, 2) - pow(e->bg->sz, 2);
-	e->dis = pow(b, 2) - 4 * a * c;
+	e->a = (r->dx * r->dx + r->dy * r->dy + r->dz * r->dz)
+		- ((r->dx * e->bg->dx + r->dy * e->bg->dy + r->dz * e->bg->dz)
+		* (r->dx * e->bg->dx + r->dy * e->bg->dy + r->dz * e->bg->dz));
+	e->b = 2 * ((r->dx * e->ex + r->dy * e->ey + r->dz * e->ez)
+		- (e->bg->dx * e->ex + e->bg->dy * e->ey + e->bg->dz * e->ez)
+		* (e->bg->dx * r->dx + e->bg->dy * r->dy + e->bg->dz * r->dz));
+	e->c = (e->ex * e->ex + e->ey * e->ey + e->ez * e->ez)
+		- ((e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz)
+		* (e->ex * e->bg->dx + e->ey * e->bg->dy + e->ez * e->bg->dz))
+		- e->bg->sz * e->bg->sz;
+	e->dis = e->b * e->b - 4 * e->a * e->c;
 	if (e->dis > 0)
 	{
-		e->t = ((-b + sqrt(e->dis)) / (2 * a) <= (-b - sqrt(e->dis)) / (2 * a) ?
-				(-b + sqrt(e->dis)) / (2 * a) : (-b - sqrt(e->dis)) / (2 * a));
+		e->t = ((-e->b + sqrt(e->dis)) / (2 * e->a) <=
+				(-e->b - sqrt(e->dis)) / (2 * e->a) ?
+				(-e->b + sqrt(e->dis)) / (2 * e->a) :
+				(-e->b - sqrt(e->dis)) / (2 * e->a));
 	}
 }
-

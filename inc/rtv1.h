@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 10:20:01 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/29 16:10:05 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/05/02 15:28:08 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct		s_obj
 	double			dy;
 	double			dz;
 	double			sz;
+	double			szcos;
+	double			szsin;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -87,6 +89,19 @@ typedef struct		s_env
 	double			dis;
 
 	double			test;
+
+	double			cam_ligx;
+	double			cam_ligy;
+	double			cam_ligz;
+
+	double			ex;
+	double			ey;
+	double			ez;
+	double			ea;
+
+	double			a;
+	double			b;
+	double			c;
 }					t_env;
 
 void				ft_ini_ray(t_env *e);
@@ -109,7 +124,7 @@ void				ft_put_col(t_env *e, int x, int y);
 void				ft_sphere(t_env *e, t_ray *r);
 void				ft_cone(t_env *e, t_ray *r);
 void				ft_cylindre(t_env *e, t_ray *r);
-void				ft_plan(t_env *e, t_ray *r);
+void				ft_plan(t_env *e);
 
 void				ft_put_pixel(t_env *e, int x, int y, int color);
 

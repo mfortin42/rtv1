@@ -6,7 +6,7 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/10 14:24:02 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/29 16:23:57 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/05/02 15:24:21 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_all_lig(t_env *e)
 
 	e->test = 1;
 	tmp = e->m_obj;
-	e->lig->lum.dx = e->cam->dx * e->m_t + e->cam->ox - e->lig->lum.ox;
-	e->lig->lum.dy = e->cam->dy * e->m_t + e->cam->oy - e->lig->lum.oy;
-	e->lig->lum.dz = e->cam->dz * e->m_t + e->cam->oz - e->lig->lum.oz;
+	e->lig->lum.dx = e->cam->dx * e->m_t + e->cam_ligx;
+	e->lig->lum.dy = e->cam->dy * e->m_t + e->cam_ligy;
+	e->lig->lum.dz = e->cam->dz * e->m_t + e->cam_ligz;
 	ft_norm(&e->lig->lum.dx, &e->lig->lum.dy, &e->lig->lum.dz);
 	ft_all_obj(e, &e->lig->lum);
 	if (tmp != e->m_obj)
@@ -59,14 +59,18 @@ void	ft_all_obj(t_env *e, t_ray *r)
 	e->bg = e->obj;
 	while (e->bg)
 	{
+		e->ex = r->ox - e->bg->ox;
+		e->ey = r->oy - e->bg->oy;
+		e->ez = r->oz - e->bg->oz;
+		e->ea = r->dx * e->bg->dx + r->dy * e->bg->dy + r->dz * e->bg->dz;
 		if (e->bg->n == 's')
 			ft_sphere(e, r);
-		if (e->bg->n == 'c')
+		else if (e->bg->n == 'c')
 			ft_cone(e, r);
-		if (e->bg->n == 'y')
+		else if (e->bg->n == 'y')
 			ft_cylindre(e, r);
-		if (e->bg->n == 'p')
-			ft_plan(e, r);
+		else if (e->bg->n == 'p')
+			ft_plan(e);
 		if ((e->m_t == 0 || e->t < e->m_t) && e->t >= 1)
 		{
 			e->m_t = e->t;
