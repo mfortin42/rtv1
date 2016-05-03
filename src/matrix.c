@@ -6,15 +6,14 @@
 /*   By: mfortin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 14:46:07 by mfortin           #+#    #+#             */
-/*   Updated: 2016/04/27 12:48:20 by mfortin          ###   ########.fr       */
+/*   Updated: 2016/05/03 16:28:04 by mfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rtv1.h"
 
-void	ft_matrix(t_env *e, t_ray *r)
+void	ft_matrix(t_env *e)
 {
-	r->dx = r->dx;
 	double **mx_a;
 	double **mx_b;
 	double **mx_c;
@@ -22,7 +21,7 @@ void	ft_matrix(t_env *e, t_ray *r)
 	mx_a = ft_matrix_a(1 - cos(e->agl), e->cdx, e->cdy, e->cdz);
 	mx_b = ft_matrix_b(cos(e->agl));
 	mx_c = ft_matrix_c(sin(e->agl), e->cdx, e->cdy, e->cdz);
-	ft_sum_matrix(e, mx_a, mx_b, mx_c);
+	ft_smx(e, mx_a, mx_b, mx_c);
 }
 
 double	**ft_matrix_a(double a, double x, double y, double z)
@@ -90,7 +89,7 @@ double	**ft_matrix_c(double a, double x, double y, double z)
 	return (matrix);
 }
 
-void	ft_sum_matrix(t_env *e, double **mx_a, double **mx_b, double **mx_c)
+void	ft_smx(t_env *e, double **m_a, double **m_b, double **m_c)
 {
 	int i;
 	int j;
@@ -104,12 +103,12 @@ void	ft_sum_matrix(t_env *e, double **mx_a, double **mx_b, double **mx_c)
 	{
 		j = -1;
 		while (++j < 3)
-			e->mx[i][j] = mx_a[i][j] + mx_b[i][j] + mx_c[i][j];
-		free(mx_a[i]);
-		free(mx_b[i]);
-		free(mx_c[i]);
+			e->mx[i][j] = m_a[i][j] + m_b[i][j] + m_c[i][j];
+		free(m_a[i]);
+		free(m_b[i]);
+		free(m_c[i]);
 	}
-	free(mx_a);
-	free(mx_b);
-	free(mx_c);
+	free(m_a);
+	free(m_b);
+	free(m_c);
 }
